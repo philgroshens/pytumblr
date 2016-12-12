@@ -17,7 +17,8 @@ setup(
 
     install_requires = [
         'oauth2',
-        'httpretty'
+        'httpretty',
+        'tornado'
     ],
 
     tests_require=[
