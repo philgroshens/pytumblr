@@ -3,7 +3,7 @@
 import pytumblr
 import yaml
 import os
-import urlparse
+import urllib.parse
 import code
 import oauth2 as oauth
 
@@ -13,9 +13,9 @@ def new_oauth(yaml_path):
     save in a yaml file in the user's home directory.
     '''
 
-    print 'Retrieve consumer key and consumer secret from http://www.tumblr.com/oauth/apps'
-    consumer_key = raw_input('Paste the consumer key here: ')
-    consumer_secret = raw_input('Paste the consumer secret here: ')
+    print('Retrieve consumer key and consumer secret from http://www.tumblr.com/oauth/apps')
+    consumer_key = input('Paste the consumer key here: ')
+    consumer_secret = input('Paste the consumer secret here: ')
 
     request_token_url = 'http://www.tumblr.com/oauth/request_token'
     authorize_url = 'http://www.tumblr.com/oauth/authorize'
@@ -26,15 +26,15 @@ def new_oauth(yaml_path):
 
     # Get request token
     resp, content = client.request(request_token_url, "POST")
-    request_token =  urlparse.parse_qs(content)
+    request_token =  urllib.parse.parse_qs(content)
 
     # Redirect to authentication page
-    print '\nPlease go here and authorize:\n%s?oauth_token=%s' % (authorize_url, request_token['oauth_token'][0])
-    redirect_response = raw_input('Allow then paste the full redirect URL here:\n')
+    print(('\nPlease go here and authorize:\n%s?oauth_token=%s' % (authorize_url, request_token['oauth_token'][0])))
+    redirect_response = input('Allow then paste the full redirect URL here:\n')
 
     # Retrieve oauth verifier
-    url = urlparse.urlparse(redirect_response)
-    query_dict = urlparse.parse_qs(url.query)
+    url = urllib.parse.urlparse(redirect_response)
+    query_dict = urllib.parse.parse_qs(url.query)
     oauth_verifier = query_dict['oauth_verifier'][0]
 
     # Request access token
@@ -43,7 +43,7 @@ def new_oauth(yaml_path):
     client = oauth.Client(consumer, token)
 
     resp, content = client.request(access_token_url, "POST")
-    access_token = urlparse.parse_qs(content)
+    access_token = urllib.parse.parse_qs(content)
 
     tokens = {
         'consumer_key': consumer_key,
@@ -75,6 +75,6 @@ if __name__ == '__main__':
         tokens['oauth_token_secret']
     )
 
-    print 'pytumblr client created. You may run pytumblr commands prefixed with "client".\n'
+    print('pytumblr client created. You may run pytumblr commands prefixed with "client".\n')
 
     code.interact(local=dict(globals(), **{'client': client}))
