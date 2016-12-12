@@ -1,6 +1,8 @@
 # PyTumblr
 
-[![Build Status](https://travis-ci.org/tumblr/pytumblr.png?branch=master)](https://travis-ci.org/tumblr/pytumblr)
+[![Build Status](https://travis-ci.org/philgroshens/pytumblr.png?branch=master)](https://travis-ci.org/philgroshens/pytumblr)
+
+### Updated Dec 12 2016 to support Python3
 
 ## Create a client
 
